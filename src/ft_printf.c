@@ -6,14 +6,14 @@
 /*   By: patrik <patrik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 21:16:10 by ptison            #+#    #+#             */
-/*   Updated: 2025/06/10 10:37:49 by patrik           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:03:12 by patrik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include "parser.h"
+#include "libft.h"
 
-void ft_putchar(char c);
 int dispatch_conversion(t_format fmt, va_list args);
 
 int ft_printf(const char* format, ...)
@@ -33,7 +33,7 @@ int ft_printf(const char* format, ...)
 		}
 		else
 		{
-			ft_putchar(format[i]);
+			ft_putchar_fd(format[i], 1);
 			total++;
 			i++;
 		}

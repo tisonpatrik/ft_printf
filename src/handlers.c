@@ -6,13 +6,14 @@
 /*   By: patrik <patrik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:24:00 by patrik            #+#    #+#             */
-/*   Updated: 2025/06/10 12:50:00 by patrik           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:56:50 by patrik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
-#include <libft.h>
+#include "libft.h"
+#include "parser.h"
 
 void ft_putnbr_unsigned(unsigned int n);
 void ft_putnbr_hex(unsigned int n, int uppercase);
@@ -24,7 +25,7 @@ int handle_char(t_format fmt, va_list args)
 {
     (void)fmt; // Suppress unused parameter warning
     char c = va_arg(args, int);  // char is promoted to int in va_arg
-    ft_putchar(c);
+    ft_putchar_fd(c, 1);
     return 1;
 }
 
@@ -37,11 +38,8 @@ int handle_string(t_format fmt, va_list args)
     if (s == NULL)
         s = "(null)";
     
-    while (s[count])
-    {
-        ft_putchar(s[count]);
-        count++;
-    }
+    count = ft_strlen(s);
+    ft_putstr_fd(s, 1);
     return count;
 }
 
@@ -52,11 +50,11 @@ int handle_pointer(t_format fmt, va_list args)
     
     if (ptr == NULL)
     {
-        ft_putstr("(nil)");
+        ft_putstr_fd("(nil)", 1);
         return 5;
     }
     
-    ft_putstr("0x");
+    ft_putstr_fd("0x", 1);
     ft_putptr(ptr);
     return 2 + 16; // "0x" + hex digits (assuming 64-bit)
 }
@@ -84,7 +82,7 @@ int handle_decimal(t_format fmt, va_list args)
         }
     }
     
-    ft_putnbr(n);
+    ft_putnbr_fd(n, 1);
     return count;
 }
 
@@ -134,6 +132,6 @@ int handle_hex(t_format fmt, va_list args)
 int handle_percent(t_format fmt)
 {
     (void)fmt; // Suppress unused parameter warning
-    ft_putchar('%');
+    ft_putchar_fd('%', 1);
     return 1;
 } 
