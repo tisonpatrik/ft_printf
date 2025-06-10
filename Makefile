@@ -6,38 +6,67 @@
 #    By: patrik <patrik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/10 10:38:00 by patrik            #+#    #+#              #
-#    Updated: 2025/06/10 12:31:11 by patrik           ###   ########.fr        #
+#    Updated: 2025/06/10 12:51:47 by patrik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-# Source files
-SOURCES = $(wildcard src/*.c)
-BONUS_SOURCES = $(wildcard src/*_bonus.c)
-OBJECTS = $(SOURCES:.c=.o)
-BONUS_OBJECTS = $(BONUS_SOURCES:.c=.o)
+# Libft
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-# Headers
+# Mandatory source files
+SOURCES = src/ft_printf.c \
+          src/parser.c \
+          src/dispatcher.c \
+          src/handlers.c \
+          src/utils.c
+
+# Bonus source files (for later)
+BONUS_SOURCES = src/parser_bonus.c \
+                src/handlers_bonus.c
+
+# Object files
+OBJECTS = src/ft_printf.o \
+          src/parser.o \
+          src/dispatcher.o \
+          src/handlers.o \
+          src/utils.o
+
+BONUS_OBJECTS = src/parser_bonus.o \
+                src/handlers_bonus.o
+
+# Header files
 HEADERS = ft_printf.h src/parser.h
-BONUS_HEADERS = $(wildcard src/*_bonus.h)
 
-all: $(NAME)
+# Rules
+all: $(LIBFT) $(NAME)
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJECTS)
+	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJECTS)
 
-bonus: $(OBJECTS) $(BONUS_OBJECTS)
+bonus: $(LIBFT) $(OBJECTS) $(BONUS_OBJECTS)
+	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJECTS) $(BONUS_OBJECTS)
 
-src/%.o: src/%.c $(HEADERS) $(BONUS_HEADERS)
-	cc -Wall -Wextra -Werror -I. -I src -c $< -o $@
+# Compilation rule
+src/%.o: src/%.c $(HEADERS)
+	cc -Wall -Wextra -Werror -I. -I src -I $(LIBFT_DIR) -c $< -o $@
 
+# Clean rules
 clean:
-	rm -f $(OBJECTS) $(BONUS_OBJECTS)
+	rm -f $(OBJECTS)
+	rm -f $(BONUS_OBJECTS)
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

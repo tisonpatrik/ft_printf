@@ -6,17 +6,14 @@
 /*   By: patrik <patrik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:24:00 by patrik            #+#    #+#             */
-/*   Updated: 2025/06/10 10:27:27 by patrik           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:50:00 by patrik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
-#include "parser.h"
+#include <libft.h>
 
-void ft_putchar(char c);
-void ft_putstr(char *s);
-void ft_putnbr(int n);
 void ft_putnbr_unsigned(unsigned int n);
 void ft_putnbr_hex(unsigned int n, int uppercase);
 void ft_putptr(void *ptr);

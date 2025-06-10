@@ -6,16 +6,11 @@
 /*   By: patrik <patrik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 19:49:37 by ptison            #+#    #+#             */
-/*   Updated: 2025/06/10 10:25:39 by patrik           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:47:51 by patrik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
-void ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
 
 void ft_putstr(char *s)
 {
