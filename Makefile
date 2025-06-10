@@ -6,7 +6,7 @@
 #    By: patrik <patrik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/10 10:38:00 by patrik            #+#    #+#              #
-#    Updated: 2025/06/10 12:51:47 by patrik           ###   ########.fr        #
+#    Updated: 2025/06/10 13:15:41 by patrik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,19 +23,12 @@ SOURCES = src/ft_printf.c \
           src/handlers.c \
           src/utils.c
 
-# Bonus source files (for later)
-BONUS_SOURCES = src/parser_bonus.c \
-                src/handlers_bonus.c
-
 # Object files
 OBJECTS = src/ft_printf.o \
           src/parser.o \
           src/dispatcher.o \
           src/handlers.o \
           src/utils.o
-
-BONUS_OBJECTS = src/parser_bonus.o \
-                src/handlers_bonus.o
 
 # Header files
 HEADERS = ft_printf.h src/parser.h
@@ -50,9 +43,8 @@ $(NAME): $(OBJECTS)
 	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJECTS)
 
-bonus: $(LIBFT) $(OBJECTS) $(BONUS_OBJECTS)
-	cp $(LIBFT) $(NAME)
-	ar rcs $(NAME) $(OBJECTS) $(BONUS_OBJECTS)
+# For now, bonus just rebuilds the mandatory part
+bonus: $(LIBFT) $(NAME)
 
 # Compilation rule
 src/%.o: src/%.c $(HEADERS)
@@ -61,7 +53,6 @@ src/%.o: src/%.c $(HEADERS)
 # Clean rules
 clean:
 	rm -f $(OBJECTS)
-	rm -f $(BONUS_OBJECTS)
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean

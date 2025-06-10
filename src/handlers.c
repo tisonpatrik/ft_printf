@@ -6,7 +6,7 @@
 /*   By: patrik <patrik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:24:00 by patrik            #+#    #+#             */
-/*   Updated: 2025/06/10 12:56:50 by patrik           ###   ########.fr       */
+/*   Updated: 2025/06/10 13:10:23 by patrik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,25 @@ int handle_pointer(t_format fmt, va_list args)
     }
     
     ft_putstr_fd("0x", 1);
+    
+    // Count hex digits needed for this pointer
+    unsigned long addr = (unsigned long)ptr;
+    int hex_count = 0;
+    unsigned long temp = addr;
+    
+    if (temp == 0)
+        hex_count = 1;
+    else
+    {
+        while (temp > 0)
+        {
+            temp /= 16;
+            hex_count++;
+        }
+    }
+    
     ft_putptr(ptr);
-    return 2 + 16; // "0x" + hex digits (assuming 64-bit)
+    return 2 + hex_count; // "0x" + actual hex digits
 }
 
 int handle_decimal(t_format fmt, va_list args)
@@ -64,7 +81,7 @@ int handle_decimal(t_format fmt, va_list args)
     (void)fmt; // Suppress unused parameter warning
     int n = va_arg(args, int);
     int count = 0;
-    int temp = n;
+    long temp = n; // Use long to avoid overflow issues
     
     if (n < 0)
         count = 1; // for the minus sign
@@ -73,8 +90,8 @@ int handle_decimal(t_format fmt, va_list args)
         count = 1;
     else
     {
-        if (n < 0)
-            temp = -n;
+        if (temp < 0)
+            temp = -temp;
         while (temp > 0)
         {
             temp /= 10;
